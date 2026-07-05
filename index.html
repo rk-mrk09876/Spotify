@@ -1,14 +1,11 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Spotify - Music for everyone</title>
-
     <link rel="icon" type="image/png" href="logo.png" />
-
     <link rel="stylesheet" href="style.css" />
-
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
@@ -16,13 +13,13 @@
   </head>
 
   <body>
-    <!-- HEADER -->
     <header>
-      <nav class="parent">
-        <div class="top">Spotify</div>
-
-        <div class="logo1">
-          <img src="logo.png" alt="logo" />
+      <nav class="navbar">
+        <div class="brand-container">
+          <div class="logo">
+            <img src="logo.png" alt="Spotify Logo" />
+          </div>
+          <div class="brand-name">Spotify</div>
         </div>
 
         <ul class="nav-links">
@@ -30,185 +27,147 @@
           <li><a href="#">About</a></li>
           <li><a href="copyright.html" target="_blank">Copyright Info</a></li>
         </ul>
-        <ul class="nav-links">
-          ...
-        </ul>
 
         <div class="search-box">
           <input type="text" id="searchInput" placeholder="Search Songs..." />
         </div>
       </nav>
-     
-      </div>
     </header>
 
-    <!-- MAIN -->
-    <main>
-      <div class="parent2">
-        <!-- SONG 1 -->
+    <main class="main-container">
+      <div class="songs-list">
+        
         <div class="songbanner" data-index="0">
           <img src="covers/1.jpg" alt="cover" />
-
           <div class="songtitle">
             <i class="fa-solid fa-play song-play" data-index="0"></i>
             <span>Aleemrk - Cold Hours (Lyrics)</span>
           </div>
         </div>
 
-        <!-- SONG 2 -->
         <div class="songbanner" data-index="1">
           <img src="covers/2.jpg" alt="cover" />
-
           <div class="songtitle">
             <i class="fa-solid fa-play song-play" data-index="1"></i>
             <span>Kaifi Khalil - Kahani Suno 2.0</span>
           </div>
         </div>
 
-        <!-- SONG 3 -->
         <div class="songbanner" data-index="2">
           <img src="covers/3.jpg" alt="cover" />
-
           <div class="songtitle">
             <i class="fa-solid fa-play song-play" data-index="2"></i>
             <span>The Weeknd - Starboy</span>
           </div>
         </div>
 
-        <!-- SONG 4 -->
         <div class="songbanner" data-index="3">
           <img src="covers/4.jpg" alt="cover" />
-
           <div class="songtitle">
             <i class="fa-solid fa-play song-play" data-index="3"></i>
             <span>Arjan Vailly (Slowed Reverb)</span>
           </div>
         </div>
 
-        <!-- SONG 5 -->
         <div class="songbanner" data-index="4">
           <img src="covers/5.jpg" alt="cover" />
-
           <div class="songtitle">
             <i class="fa-solid fa-play song-play" data-index="4"></i>
             <span>Shubh - MVP</span>
           </div>
         </div>
 
-        <!-- SONG 6 -->
         <div class="songbanner" data-index="5">
           <img src="covers/6.jpg" alt="cover" />
-
           <div class="songtitle">
             <i class="fa-solid fa-play song-play" data-index="5"></i>
             <span>CANTO DE LUNA</span>
           </div>
         </div>
 
-        <!-- SONG 7 -->
         <div class="songbanner" data-index="6">
           <img src="covers/7.jpg" alt="cover" />
-
           <div class="songtitle">
             <i class="fa-solid fa-play song-play" data-index="6"></i>
             <span>Wakhra Swag</span>
           </div>
         </div>
 
-        <!-- SONG 8 -->
         <div class="songbanner" data-index="7">
           <img src="covers/8.jpg" alt="cover" />
-
           <div class="songtitle">
             <i class="fa-solid fa-play song-play" data-index="7"></i>
             <span>Shubh - Cheques</span>
           </div>
         </div>
 
-        <!-- SONG 9 -->
         <div class="songbanner" data-index="8">
           <img src="covers/9.jpg" alt="cover" />
-
           <div class="songtitle">
             <i class="fa-solid fa-play song-play" data-index="8"></i>
             <span>Shubh - Still Rollin</span>
           </div>
         </div>
 
-        <!-- SONG 10 -->
         <div class="songbanner" data-index="9">
           <img src="covers/10.jpg" alt="cover" />
-
           <div class="songtitle">
             <i class="fa-solid fa-play song-play" data-index="9"></i>
             <span>We Rollin (Official Audio)</span>
           </div>
         </div>
-            <div class="songbanner" data-index="10">
-          <img src="covers/11.jpg" alt="cover" />
 
+        <div class="songbanner" data-index="10">
+          <img src="covers/11.jpg" alt="cover" />
           <div class="songtitle">
             <i class="fa-solid fa-play song-play" data-index="10"></i>
-            <span>Kaley Sheshe – Addy Nagar Official Music Video @AddyNagar - Sony Music India (128k)</span>
+            <span>Kaley Sheshe – Addy Nagar Official Music Video</span>
           </div>
         </div>
-         <!-- SONG 10 -->
+
         <div class="songbanner" data-index="11">
           <img src="covers/12.jpg" alt="cover" />
-
           <div class="songtitle">
             <i class="fa-solid fa-play song-play" data-index="11"></i>
-            <span>295 (Official Audio) Sidhu Moose Wala The Kidd Moosetape - Sidhu Moose Wala (128k)</span>
+            <span>295 - Sidhu Moose Wala</span>
           </div>
         </div>
+
       </div>
     </main>
 
-  <footer>
-  <div class="parent3">
+    <footer class="player-footer">
+      <div class="player-container">
+        
+        <div class="progress-block">
+          <span class="current-time">00:00</span>
+          <input type="range" id="my-progress-bar" min="0" max="100" value="0" />
+          <span class="song-duration">00:00</span>
+        </div>
 
-    <input
-      type="range"
-      id="my-progress-bar"
-      min="0"
-      max="100"
-      value="0"
-    />
+        <div class="bottom-controls-grid">
+          
+          <div class="song-meta-left">
+            <span class="footer-song-name">No Song Playing</span>
+          </div>
 
-    <div class="icons">
+          <div class="playback-controls">
+            <i class="fa-solid fa-backward" id="prevBtn"></i>
+            <i class="fa-solid fa-circle-play masterPlay"></i>
+            <i class="fa-solid fa-forward" id="nextBtn"></i>
+          </div>
 
-      <!-- Current Time -->
-      <span class="current-time">00:00</span>
+          <div class="song-visualizer-right">
+            <div class="footer-gif">
+              <img src="playing.gif" alt="playing visualizer" />
+            </div>
+          </div>
 
-      <!-- Song Name -->
-      <span class="footer-song-name">
-        No Song Playing
-      </span>
+        </div>
 
-      <!-- Previous -->
-      <i class="fa-solid fa-backward"></i>
-
-      <!-- Play / Pause -->
-      <i
-        class="fa-solid fa-circle-play masterPlay"
-        style="font-size:37px"
-      ></i>
-
-      <!-- Next -->
-      <i class="fa-solid fa-forward"></i>
-
-      <!-- Playing GIF -->
-      <div class="footer-gif">
-        <img src="playing.gif" alt="playing">
       </div>
+    </footer>
 
-      <!-- Total Duration -->
-      <span class="song-duration">00:00</span>
-
-    </div>
-
-  </div>
-</footer>
     <script src="script.js"></script>
   </body>
 </html>

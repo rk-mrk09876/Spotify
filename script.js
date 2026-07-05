@@ -10,14 +10,16 @@ const songs = [
   { name: "Shubh - Still Rollin", file: "songs/9.mp3" },
   { name: "We Rollin", file: "songs/10.mp3" },
   { name: "Kaley Sheshe – Addy Nagar", file: "songs/11.mp3" },
-{ name: "Kaley Sheshe – Addy Nagar", file: "songs/12.mp3" }
+  { name: "Sidhu Moose Wala - 295", file: "songs/12.mp3" }
 ];
+
 let currentSong = 0;
 let audio = new Audio();
 
+// Elements Selector
 const masterPlay = document.querySelector(".masterPlay");
-const nextBtn = document.querySelector(".fa-forward");
-const prevBtn = document.querySelector(".fa-backward");
+const nextBtn = document.getElementById("nextBtn");
+const prevBtn = document.getElementById("prevBtn");
 const progressBar = document.getElementById("my-progress-bar");
 
 const footerSongName = document.querySelector(".footer-song-name");
@@ -25,43 +27,63 @@ const footerGif = document.querySelector(".footer-gif");
 
 const currentTimeEl = document.querySelector(".current-time");
 const durationEl = document.querySelector(".song-duration");
-
 const searchInput = document.getElementById("searchInput");
 
+// Helper function to format seconds into MM:SS format
 function formatTime(seconds) {
+  if (isNaN(seconds)) return "00:00";
   let mins = Math.floor(seconds / 60);
   let secs = Math.floor(seconds % 60);
-
   if (secs < 10) secs = "0" + secs;
-
   return mins + ":" + secs;
 }
 
+// Reset all individual playlist item icons back to standard play arrows
+function resetRowIcons() {
+  document.querySelectorAll(".song-play").forEach(btn => {
+    btn.classList.remove("fa-pause");
+    btn.classList.add("fa-play");
+  });
+}
+
+// Global Core Play Function
 function playSong(index) {
   currentSong = index;
-
   audio.src = songs[index].file;
-  audio.play();
+  
+  audio.play().catch(err => {
+    console.log("Audio target asset load error or user interaction missing:", err);
+  });
 
   footerSongName.textContent = songs[index].name;
   footerGif.style.opacity = "1";
 
+  // Update Main Footer Control Switch Graphic
   masterPlay.classList.remove("fa-circle-play");
   masterPlay.classList.add("fa-circle-pause");
+
+  // Sync internal inline list items dynamically
+  resetRowIcons();
+  const activeRowIcon = document.querySelector(`.song-play[data-index="${index}"]`);
+  if (activeRowIcon) {
+    activeRowIcon.classList.remove("fa-play");
+    activeRowIcon.classList.add("fa-pause");
+  }
 }
 
+// Global Core Pause Function
 function pauseSong() {
   audio.pause();
-
   footerGif.style.opacity = "0";
 
   masterPlay.classList.remove("fa-circle-pause");
   masterPlay.classList.add("fa-circle-play");
+
+  resetRowIcons();
 }
 
-// Footer Play / Pause
+// Bottom Bar Central Core Toggle Trigger
 masterPlay.addEventListener("click", () => {
-
   if (!audio.src) {
     playSong(0);
     return;
@@ -69,138 +91,92 @@ masterPlay.addEventListener("click", () => {
 
   if (audio.paused) {
     audio.play();
-
     footerGif.style.opacity = "1";
-
     masterPlay.classList.remove("fa-circle-play");
     masterPlay.classList.add("fa-circle-pause");
-
+    
+    const activeRowIcon = document.querySelector(`.song-play[data-index="${currentSong}"]`);
+    if (activeRowIcon) {
+      activeRowIcon.classList.remove("fa-play");
+      activeRowIcon.classList.add("fa-pause");
+    }
   } else {
     pauseSong();
   }
-
 });
 
-// Song Row Click
+// Row selection event bindings
 document.querySelectorAll(".songbanner").forEach(song => {
-
   song.addEventListener("click", () => {
-
     const index = parseInt(song.dataset.index);
-
-    playSong(index);
-
+    if (currentSong === index && !audio.paused) {
+      pauseSong();
+    } else {
+      playSong(index);
+    }
   });
-
 });
 
-// Play Icon Click
+// Explicit playlist vector icon trigger logic
 document.querySelectorAll(".song-play").forEach(btn => {
-
   btn.addEventListener("click", (e) => {
-
-    e.stopPropagation();
-
+    e.stopPropagation(); // Stops immediate row background double click firing execution loops
     const index = parseInt(btn.dataset.index);
-
-    playSong(index);
-
+    if (currentSong === index && !audio.paused) {
+      pauseSong();
+    } else {
+      playSong(index);
+    }
   });
-
 });
 
-// Next
+// Sequential Playlist Iteration Trigger (Forward Loop)
 nextBtn.addEventListener("click", () => {
-
-  currentSong++;
-
-  if (currentSong >= songs.length) {
-    currentSong = 0;
-  }
-
+  currentSong = (currentSong + 1) % songs.length;
   playSong(currentSong);
-
 });
 
-// Previous
+// Sequential Playlist Iteration Trigger (Backward Loop)
 prevBtn.addEventListener("click", () => {
-
-  currentSong--;
-
-  if (currentSong < 0) {
-    currentSong = songs.length - 1;
-  }
-
+  currentSong = (currentSong - 1 + songs.length) % songs.length;
   playSong(currentSong);
-
 });
 
-// Progress Update
+// Continuous Runtime calculations mapping directly into tracking progress bars
 audio.addEventListener("timeupdate", () => {
-
   if (audio.duration) {
-
-    let progress =
-      (audio.currentTime / audio.duration) * 100;
-
+    let progress = (audio.currentTime / audio.duration) * 100;
     progressBar.value = progress;
 
-    currentTimeEl.textContent =
-      formatTime(audio.currentTime);
-
-    durationEl.textContent =
-      formatTime(audio.duration);
-
+    currentTimeEl.textContent = formatTime(audio.currentTime);
+    durationEl.textContent = formatTime(audio.duration);
   }
-
 });
 
-// Seek
+// Track Scrub/Manual Seek update listeners
 progressBar.addEventListener("input", () => {
-
   if (audio.duration) {
-
-    audio.currentTime =
-      (progressBar.value / 100) * audio.duration;
-
+    audio.currentTime = (progressBar.value / 100) * audio.duration;
   }
-
 });
 
-// Auto Next Song
+// Automatic Track Advancement configuration hook
 audio.addEventListener("ended", () => {
-
-  currentSong++;
-
-  if (currentSong >= songs.length) {
-    currentSong = 0;
-  }
-
+  currentSong = (currentSong + 1) % songs.length;
   playSong(currentSong);
-
 });
 
-// Search Songs
+// Functional Dynamic Real-Time Text Parsing / Search filter interface hook
 if (searchInput) {
-
-  searchInput.addEventListener("keyup", () => {
-
-    let value = searchInput.value.toLowerCase();
-
-    document.querySelectorAll(".songbanner")
-      .forEach(song => {
-
-        let text =
-          song.innerText.toLowerCase();
-
-        if (text.includes(value)) {
-          song.style.display = "flex";
-        } else {
-          song.style.display = "none";
-        }
-
-      });
-
+  searchInput.addEventListener("input", () => {
+    let value = searchInput.value.toLowerCase().trim();
+    document.querySelectorAll(".songbanner").forEach(song => {
+      let text = song.innerText.toLowerCase();
+      if (text.includes(value)) {
+        song.style.display = "flex";
+      } else {
+        song.style.display = "none";
+      }
+    });
   });
-
 }
